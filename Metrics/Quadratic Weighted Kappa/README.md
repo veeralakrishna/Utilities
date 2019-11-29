@@ -15,7 +15,7 @@ The quadratic weighted kappa is calculated as follows. First, an N x N histogram
 
 https://www.codecogs.com/latex/eqneditor.php
 
-w_{i,j} = \frac{\left(i-j\right)^2}{\left(N-1\right)^2}
+$w_{i,j} = \frac{\left(i-j\right)^2}{\left(N-1\right)^2}$
 
 ![](https://latex.codecogs.com/gif.latex?w_%7Bi%2Cj%7D%20%3D%20%5Cfrac%7B%5Cleft%28i-j%5Cright%29%5E2%7D%7B%5Cleft%28N-1%5Cright%29%5E2%7D)
 
