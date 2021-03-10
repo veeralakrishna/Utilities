@@ -6,7 +6,14 @@ def uniqueCombinations(numeric_col):
     return list(s)
 
 
+
+
+from __future__ import annotations
 import itertools
 
-def unique_combinations(list_elements):
-    return list(itertools.combinations(set(list_elements), 2))
+def unique_combinations(elements: list[str]) -> list[tuple[str, str]]:
+    """
+    Precondition: `elements` does not contain duplicates.
+    Postcondition: Returns unique combinations of length 2 from `elements`.
+    """
+    return list(itertools.combinations(elements, 2))
