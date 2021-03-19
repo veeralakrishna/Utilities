@@ -64,4 +64,40 @@ original_list = [[['B_S', 'O', 'O', 'O'],
 desired_output = [
     [mode(i) for i in zip(*j)] 
     for j in original_list
+  
 ]
+
+
+
+
+# A broader solution using loop:
+
+def merge_result(data):
+    ar = []
+    for i in range(0, len(data)-2, 3):
+        temp = []        
+        for j in range(len(data[i])):
+            if data[i][j] == data[i+1][j]:
+                temp.append(data[i][j])
+            elif data[i+2][j] == data[i+1][j]:
+                temp.append(data[i+1][j])
+            elif data[i][j] == data[i+2][j]:
+                temp.append(data[i][j])
+            else:
+                temp.append('O')
+        ar.append(temp)
+    return ar
+
+if __name__ == "__main__":
+    original_list = [['B_S', 'O', 'O', 'O'],
+                 ['B_S', 'O', 'O', 'O'],
+                 ['O', 'O', 'B_S', 'O'],
+
+                 ['O', 'O', 'O', 'O', 'B_S', 'O', 'O', 'O', 'O', 'O'],
+                 ['O', 'O', 'O', 'O', 'O', 'B_S', 'O', 'O', 'O', 'O'],
+                 ['O', 'O', 'O', 'O', 'O', 'O', 'B_S', 'O', 'O', 'O'],
+
+                 ['O', 'O', 'O', 'O', 'O', 'B_S', 'O', 'O', 'B_S', 'B_S', 'O', 'O'],
+                 ['O', 'O', 'O', 'O', 'O', 'B_S', 'O', 'O', 'B_S', 'O', 'O', 'O'],
+                 ['O', 'O', 'O', 'O', 'O', 'B_S', 'O', 'O', 'B_S', 'O', 'O', 'O']]
+    print(merge_result(original_list))
