@@ -20,6 +20,14 @@ def test_model_assumptions(data, target_variable, model_name):
     - data: DataFrame, the dataset
     - target_variable: str, the name of the target variable
     - model_name: str, the name of the model (e.g., 'Linear Regression', 'Logistic Regression')
+
+
+    In this code, for the homoscedasticity test (het_breuschpagan and het_white), a p-value 
+    threshold of 0.05 is commonly used to determine statistical significance. If the p-value 
+    is greater than 0.05, it suggests that the residuals are homoscedastic. Similarly, for 
+    the normality of errors test (jarque_bera), a p-value greater than 0.05 indicates that 
+    the errors are normally distributed. These thresholds are commonly used in statistical 
+    testing to assess the validity of assumptions.
     """
     
     print(f"Testing assumptions for model: {model_name}")
@@ -55,6 +63,7 @@ def test_model_assumptions(data, target_variable, model_name):
             print("Assumption 2: Homoscedasticity - PASSED")
         else:
             print("Assumption 2: Homoscedasticity - FAILED")
+            print("Note: p-values should ideally be greater than 0.05 to indicate homoscedasticity.")
         
         # Assumption 3: Normality of errors
         jb_test = jarque_bera(residuals)
@@ -62,6 +71,7 @@ def test_model_assumptions(data, target_variable, model_name):
             print("Assumption 3: Normality of errors - PASSED")
         else:
             print("Assumption 3: Normality of errors - FAILED")
+            print("Note: p-values should ideally be greater than 0.05 to indicate normality of errors.")
         
         # Assumption 4: No multicollinearity
         vif = pd.DataFrame()
@@ -70,6 +80,7 @@ def test_model_assumptions(data, target_variable, model_name):
             print("Assumption 4: No multicollinearity - PASSED")
         else:
             print("Assumption 4: No multicollinearity - FAILED")
+            print("Note: VIF values should ideally be less than 10 to indicate no multicollinearity.")
     
     # Classification models
     elif model_name in ['Logistic Regression', 'k-Nearest Neighbors', 'Decision Tree Classifier',
@@ -83,6 +94,7 @@ def test_model_assumptions(data, target_variable, model_name):
             print("Assumption 1: Class balance - PASSED")
         else:
             print("Assumption 1: Class balance - FAILED")
+            print("Note: Class balance should ideally be between 10% and 90% to avoid class imbalance issues.")
         
         # Assumption 2: Class separation
         tn, fp, fn, tp = confusion_matrix(y, y).ravel()
@@ -90,6 +102,7 @@ def test_model_assumptions(data, target_variable, model_name):
             print("Assumption 2: Class separation - PASSED")
         else:
             print("Assumption 2: Class separation - FAILED")
+            print("Note: True positive and true negative values should be greater than 0 for class separation.")
         
         # Assumption 3: No multicollinearity
         vif = pd.DataFrame()
@@ -98,6 +111,7 @@ def test_model_assumptions(data, target_variable, model_name):
             print("Assumption 3: No multicollinearity - PASSED")
         else:
             print("Assumption 3: No multicollinearity - FAILED")
+            print("Note: VIF values should ideally be less than 10 to indicate no multicollinearity.")
     
     else:
         print("Error: Unsupported model name!")
