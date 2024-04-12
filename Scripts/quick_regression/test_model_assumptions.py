@@ -13,6 +13,15 @@ from statsmodels.stats.stattools import jarque_bera
 from sklearn.metrics import confusion_matrix
 
 def test_model_assumptions(data, target_variable, model_name):
+    """
+    Test assumptions for the specified regression or classification model.
+    
+    Parameters:
+    - data: DataFrame, the dataset
+    - target_variable: str, the name of the target variable
+    - model_name: str, the name of the model (e.g., 'Linear Regression', 'Logistic Regression')
+    """
+    
     print(f"Testing assumptions for model: {model_name}")
     print("-------------------------------------")
     
