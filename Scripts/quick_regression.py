@@ -114,9 +114,13 @@ def get_pipeline(classifier, num_cols, cat_cols, impute_strategy, log_x, log_y):
     if log_y:
         transformed_classifier = TransformedTargetRegressor(regressor=classifier, 
             func=log_transform, inverse_func=inverse_log_transform)
-        return Pipeline(steps=[('preprocessor', preprocessor), ('classifier', transformed_classifier)])
+        return Pipeline(steps=[('preprocessor', preprocessor), 
+                               ('selector', VarianceThreshold()), 
+                               ('classifier', transformed_classifier)])
     else:
-        return Pipeline(steps=[('preprocessor', preprocessor), ('classifier', classifier)])
+        return Pipeline(steps=[('preprocessor', preprocessor), 
+                               ('selector', VarianceThreshold()), 
+                               ('classifier', classifier)])
 
 def score_models(df, target_name, sample_size=None, 
     impute_strategy="mean", scoring_metrics=("r2", "mae", "mse", "rmse"), log_x=False, log_y=False, verbose=True):
