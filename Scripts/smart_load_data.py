@@ -61,8 +61,6 @@ def smart_load_data(file_path_or_dict):
     # Additional information
     total_memory_usage = psutil.virtual_memory().used
     print(f"Total memory usage: {total_memory_usage / (1024 * 1024)} MB")
-
-
     return data
 
 
