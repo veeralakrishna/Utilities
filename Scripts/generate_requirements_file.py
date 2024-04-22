@@ -1,6 +1,7 @@
 import pkg_resources
 import types
 
+# Define the function to get imports
 def get_imports():
     for name, val in globals().items():
         if isinstance(val, types.ModuleType):
@@ -25,17 +26,8 @@ def get_imports():
             
         yield name
 
+# Define the function to update requirements file
 def update_requirements_file(file_path):
-    imports = list(set(get_imports()))
-
-    # The only way I found to get the version of the root package
-    # from only the name of the package is to cross-check the names 
-    # of installed packages vs. imported packages
-    new_requirements = []
-    for m in pkg_resources.working_set:
-        if m.project_name in imports and m.project_name!="pip":
-            new_requirements.append((m.project_name, m.version))
-
     # Read existing requirements from file
     existing_requirements = set()
     try:
@@ -45,8 +37,15 @@ def update_requirements_file(file_path):
     except FileNotFoundError:
         pass
 
-    # Append new requirements to existing ones
-    updated_requirements = existing_requirements.union(set(f"{package}=={version}" for package, version in new_requirements))
+    # Get new requirements
+    new_requirements = {
+        f"{m.project_name}=={m.version}"
+        for m in pkg_resources.working_set
+        if m.project_name in get_imports() and m.project_name != "pip"
+    }
+
+    # Update existing requirements with new ones
+    updated_requirements = existing_requirements.union(new_requirements)
 
     # Write updated requirements to file
     with open(file_path, 'w') as f:
