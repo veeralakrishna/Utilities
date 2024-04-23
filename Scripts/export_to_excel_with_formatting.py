@@ -1,12 +1,17 @@
 import pandas as pd
 from openpyxl import Workbook
-from openpyxl.styles import Font, PatternFill, Border, Side, Alignment
+from openpyxl.styles import Font, Border, Side, Alignment
 from openpyxl.utils.dataframe import dataframe_to_rows
 from openpyxl.formatting.rule import ColorScaleRule, CellIsRule
 from openpyxl.formatting.rule import DataBarRule
 
 
-def export_to_excel_with_formatting(df, conditional_cols, delta_cols, conditional_method, wrap_cols, output_file):
+def export_to_excel_with_formatting(df, 
+                                    conditional_cols, 
+                                    delta_cols, 
+                                    conditional_method, 
+                                    wrap_cols, 
+                                    output_file):
     # Create a new Excel workbook
     wb = Workbook()
     ws = wb.active
@@ -16,14 +21,22 @@ def export_to_excel_with_formatting(df, conditional_cols, delta_cols, conditiona
         for c_idx, value in enumerate(row, 1):
             cell = ws.cell(row=r_idx, column=c_idx, value=value)
             # Apply center align and middle align to all cells
-            cell.alignment = Alignment(horizontal='center', vertical='center')
+            cell.alignment = Alignment(horizontal='center', 
+                                       vertical='center')
             # Apply all borders for all cells
-            cell.border = Border(left=Side(style='thin'), right=Side(style='thin'), top=Side(style='thin'), bottom=Side(style='thin'))
+            cell.border = Border(left=Side(style='thin'), 
+                                 right=Side(style='thin'), 
+                                 top=Side(style='thin'), 
+                                 bottom=Side(style='thin'))
             # Format header row
             if r_idx == 1:
                 cell.font = Font(bold=True, size=12)
-                cell.fill = PatternFill(start_color='ADD8E6', end_color='ADD8E6', fill_type='solid')
-                cell.border = Border(left=Side(style='medium'), right=Side(style='medium'), top=Side(style='medium'), bottom=Side(style='medium'))
+                cell.border = Border(
+                    left=Side(style='medium'), 
+                    right=Side(style='medium'), 
+                    top=Side(style='medium'), 
+                    bottom=Side(style='medium')
+                    )
                 # Apply thick border to header cells
                 cell.border = Border(bottom=Side(style='medium'))
             # Apply conditional formatting
@@ -38,6 +51,11 @@ def export_to_excel_with_formatting(df, conditional_cols, delta_cols, conditiona
                         b = 0
                         color_hex = f'{r:02x}{g:02x}{b:02x}'
                         cell.font = Font(color=color_hex, bold=True)
+                        # ws.conditional_formatting.add(f"{cell.coordinate}", 
+                        #                               ColorScaleRule(start_type='min', 
+                        #                                              start_color='00FF00', 
+                        #                                              end_type='max', 
+                        #                                              end_color='FF0000'))
             # Apply formatting to delta columns
             elif df.columns[c_idx - 1] in delta_cols:
                 red_arrow = u'\u2193'
@@ -81,3 +99,4 @@ def export_to_excel_with_formatting(df, conditional_cols, delta_cols, conditiona
 # wrap_cols = ['Column2', 'Column4']
 # df = pd.DataFrame({'Column1': [1, -2, 0], 'Column2': [-1, 2, 0], 'Column3': [10, -5, 0], 'Column4': [5, -10, 0]})
 # export_to_excel_with_formatting(df, conditional_cols, delta_cols, 'color_scale', wrap_cols, 'formatted_data.xlsx')
+
