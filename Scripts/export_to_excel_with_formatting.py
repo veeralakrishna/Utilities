@@ -33,9 +33,9 @@ def export_to_excel_with_formatting(df, conditional_cols, delta_cols, conditiona
                         min_val = df[df.columns[c_idx - 1]].min()
                         max_val = df[df.columns[c_idx - 1]].max()
                         scale = (value - min_val) / (max_val - min_val)
-                        r = int(255 * (1 - scale))
-                        g = int(255 * scale)
-                        b = 200
+                        r = int(255 * scale)
+                        g = int(255 * (1 - scale))
+                        b = 0
                         color_hex = f'{r:02x}{g:02x}{b:02x}'
                         cell.font = Font(color=color_hex, bold=True)
             # Apply formatting to delta columns
